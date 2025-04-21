@@ -1,0 +1,13 @@
+# Python artifacts
+*.pyc
+__pycache__/
+
+# Django DB
+db.sqlite3
+
+# Virtual environments
+venv/
+env/
+
+# IDE settings
+*.vscode/
