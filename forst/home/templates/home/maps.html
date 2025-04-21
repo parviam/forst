@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="p-3">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-6 mx-auto mb-3">
+                <h4>Greenspaces Near You</h4>
+                <hr />
+                <p>
+                    Use the map below to find local greenspaces where you can grow your own garden. Click on the markers to see more details about each location.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="map" style="height: 400px; width: 100%;"></div>
+<script>
+    function initMap() {
+        var options = {
+            zoom: 8,
+            center: { lat: 33.77592488775986, lng: -84.40133563420886 } //Instructional Center GT
+        }
+        var map = new google.maps.Map(document.getElementById('map'), options);
+    }
+</script>
+    var
+<script
+    src="https://maps.googleapis.com/maps/api/js?key={{     maps_api_key }}&callback=initMap">
+</script>
+{% endblock content %}
