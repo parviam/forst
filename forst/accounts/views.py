@@ -44,25 +44,6 @@ def login(request):
         return redirect('home.index')
 
 def reset(request):
-    '''template_data = {}
-    template_data['title'] = 'Reset Password'
-    if request.method == 'GET':
-        return render(request, 'accounts/reset.html',
-        {'template_data': template_data})
-    elif request.method == 'POST':
-        if request.POST['pinky-promise'] != "I pinky promise this is my account.":
-            user = None
-        else:
-            user = User.objects.get(username=request.POST['username'])
-            user.set_password(request.POST['password'])
-            user.save()
-    if user is None:
-        template_data['error'] = 'The username is incorrect.'
-        return render(request, 'accounts/reset.html',
-        {'template_data': template_data})
-    else:
-        auth_login(request, user)
-        return redirect('home.index')'''
     template_data = {'title': 'Reset Password'}
 
     if request.method == 'GET':
