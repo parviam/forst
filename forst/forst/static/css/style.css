@@ -1,5 +1,6 @@
 .bg-index{
-    background: url("/static/img/background.jpg") no-repeat
-    fixed;
-    background-size: 100% auto;
+    background: url("/static/img/background.jpg") no-repeat fixed;
+    background-size: cover;
+    height: 77vh; 
+    width: 100%;
 }
