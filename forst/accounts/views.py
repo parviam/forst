@@ -1,8 +1,7 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserCreationForm, CustomErrorList
-from django.shortcuts import redirect
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -12,22 +11,18 @@ from django.contrib.auth.models import User
 def logout(request):
     auth_logout(request)
     return redirect('home.index')
+
 def signup(request):
-    template_data = {}
-    template_data['title'] = 'Sign Up'
-    if request.method == 'GET':
-        template_data['form'] = CustomUserCreationForm()
-        return render(request, 'accounts/signup.html',
-            {'template_data': template_data})
-    elif request.method == 'POST':
+    if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, error_class=CustomErrorList)
-    if form.is_valid():
-        form.save()
-        return redirect('accounts.login')
+        if form.is_valid():
+            form.save()
+            return redirect('accounts.login')
     else:
-        template_data['form'] = form
-        return render(request, 'accounts/signup.html',
-            {'template_data': template_data})
+        form = CustomUserCreationForm(error_class=CustomErrorList)
+
+    return render(request, 'accounts/signup.html', {'template_data': {'form': form}})
+
 def login(request):
     template_data = {}
     template_data['title'] = 'Login'
@@ -47,8 +42,9 @@ def login(request):
     else:
         auth_login(request, user)
         return redirect('home.index')
+
 def reset(request):
-    template_data = {}
+    '''template_data = {}
     template_data['title'] = 'Reset Password'
     if request.method == 'GET':
         return render(request, 'accounts/reset.html',
@@ -66,4 +62,38 @@ def reset(request):
         {'template_data': template_data})
     else:
         auth_login(request, user)
-        return redirect('home.index')
+        return redirect('home.index')'''
+    template_data = {'title': 'Reset Password'}
+
+    if request.method == 'GET':
+        return render(request, 'accounts/reset.html', {'template_data': template_data})
+
+    elif request.method == 'POST':
+        username = request.session.get('reset_username')
+        if not username:
+            template_data['error'] = 'Session expired. Please verify your email again.'
+            return redirect('accounts.verify_email')
+
+        try:
+            user = User.objects.get(username=username)
+            new_password = request.POST.get('password')
+            user.set_password(new_password)
+            user.save()
+            del request.session['reset_username']
+            return redirect('accounts.login')
+        except User.DoesNotExist:
+            template_data['error'] = 'Unexpected error. Please try again.'
+            return render(request, 'accounts/reset.html', {'template_data': template_data})
+    
+def verify_email(request):
+    template_data = {'title': 'Verify Email'}
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email)
+            request.session['reset_username'] = user.username  # store securely in session
+            return redirect('accounts.reset')
+        except User.DoesNotExist:
+            template_data['error'] = 'No user found with that email address.'
+    return render(request, 'accounts/verify.html', {'template_data': template_data})
+
