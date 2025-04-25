@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3 mt-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow p-3 mb-4 rounded">
+                    <div class="card-body">
+                        <h2>Sign Up</h2>
+                        <hr />
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label for="id_username" class="form-label">Username</label>
+                                {{ template_data.form.username }}
+                                {% if template_data.form.username.errors %}
+                                    <div class="text-danger">
+                                        {{ template_data.form.username.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="id_email" class="form-label">Email Address</label>
+                                {{ template_data.form.email }}
+                                {% if template_data.form.email.errors %}
+                                    <div class="text-danger">
+                                        {{ template_data.form.email.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="id_password1" class="form-label">Password</label>
+                                {{ template_data.form.password1 }}
+                                {% if template_data.form.password1.errors %}
+                                    <div class="text-danger">
+                                        {{ template_data.form.password1.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="id_password2" class="form-label">Confirm Password</label>
+                                {{ template_data.form.password2 }}
+                                {% if template_data.form.password2.errors %}
+                                    <div class="text-danger">
+                                        {{ template_data.form.password2.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <button type="submit" class="btn bg-dark text-white">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

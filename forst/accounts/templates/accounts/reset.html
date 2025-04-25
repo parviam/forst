@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3 mt-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow p-3 mb-4 rounded">
+                    <div class="card-body">
+                        <h2>Reset Password</h2>
+                        <hr />
+                        <form method="POST">
+                            {% csrf_token %}
+                            <p>
+                                <label for="username">Username</label>
+                                <input id="username" type="text" name="username" required autocomplete="username"
+                                    class="form-control">
+                            </p>
+                            <p>
+                                <label for="password">New Password</label>
+                                <input id="password" type="password" name="password" required
+                                    class="form-control">
+                            </p>
+                            <button type="submit" class="btn bg-dark text-white">Verify and Reset Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
