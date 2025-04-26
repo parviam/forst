@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="mb-4">Create a New Care Post</h1>
+
+            <form method="POST" class="card card-body">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                </div>
+                <div class="mb-3">
+                    {{ form.content.label_tag }}
+                    {{ form.content }}
+                </div>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>
+
+            <a href="{% url 'forum_home' %}" class="btn btn-link mt-3">Back to Forum</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

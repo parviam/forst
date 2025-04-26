@@ -4,3 +4,46 @@
     height: 77vh; 
     width: 100%;
 }
+
+body {
+    background: url('https://images.unsplash.com/photo-1465408953385-7c4626b743db?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.8); /* slight transparency */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    background-color: #4CAF50 !important; /* green navbar */
+}
+
+.btn-primary {
+    background-color: #66bb6a;
+    border-color: #66bb6a;
+}
+
+.btn-success {
+    background-color: #81c784;
+    border-color: #81c784;
+}
+
+.btn-danger {
+    background-color: #e57373;
+    border-color: #e57373;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #2e7d32; /* strong plant green */
+}
+
+a {
+    color: #2e7d32;
+}
+
+a:hover {
+    color: #1b5e20;
+}
