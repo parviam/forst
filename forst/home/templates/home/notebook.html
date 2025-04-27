@@ -1,36 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="mb-4">My Notebook</h1>
-    {% if message %}
-    <div class="alert alert-info">
-        {{ message }}
-    </div>
-{% endif %}
-    {% if user.is_authenticated %}
-        <a href="{% url 'new_post' %}" class="btn btn-primary mb-4">Create New Post</a>
-    {% else %}
-        <p>You must be logged in to create a new post. <a href="{% url 'accounts.login' %}">Login</a></p>
-    {% endif %}
-    <div class="row">
-        {% for post in posts %}
-        <div class="col-md-6 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <p class="card-text">{{ post.text }}</p>
-                    {% if post.image %}
-                        <img src="{{ post.image.url }}" class="img-fluid rounded mt-2" alt="Post image">
-                    {% endif %}
-                    <p class="text-muted mt-2" style="font-size: 0.9rem;">
-                        Posted on {{ post.created_at|date:"M d, Y H:i" }}
-                    </p>
-                </div>
+<div class="p-3">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-6 mb-3">
+                <h3>my notebook</h3>
+                <hr />
             </div>
         </div>
-        {% empty %}
-        <p>No posts yet. Create your first one!</p>
-        {% endfor %}
+        {% if message %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endif %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'new_post' %}" class="btn btn-primary mb-4">Create New Post</a>
+        {% else %}
+            <p>You must be logged in to create a new post. <a href="{% url 'accounts.login' %}">Login</a></p>
+        {% endif %}
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">{{ post.text }}</p>
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" class="img-fluid rounded mt-2" alt="Post image">
+                        {% endif %}
+                        <p class="text-muted mt-2" style="font-size: 0.9rem;">
+                            Posted on {{ post.created_at|date:"M d, Y H:i" }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No posts yet. Create your first one!</p>
+            {% endfor %}
     </div>
 </div>
 {% endblock content %}
