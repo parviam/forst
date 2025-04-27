@@ -2,15 +2,6 @@
 
 {% block content %}
 {% load static %}
-<!-- <div class="container mt-4">
-    <div class="text-center mb-5">
-        <img src="https://64.media.tumblr.com/27af1f22fcf5e6f7649dbcedd4ba18c9/tumblr_prefnlsJFC1unfdido1_500.gif" 
-             class="img-fluid rounded" 
-             alt="Community Garden" 
-             style="max-height: 300px; object-fit: cover;">
-    </div>
-</div> -->
-
 
 <div class="p-3">
     <div class="container">
@@ -54,13 +45,7 @@
                 <a href="{% url 'create_post' %}" class="btn btn-primary">Create New Post</a>
                 <a href="{% url 'create_poll' %}" class="btn btn-primary">Create New Poll</a>
                 <a href="{% url 'add_garden_space' %}" class="btn btn-primary">Register as Garden Steward</a>
-            {% else %}
-                <a href="{% url 'accounts.login' %}" class="btn btn-primary">Login to Create Posts</a>
-            {% endif %}
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6 mb-3">
-                <h4>Your Gardens</h4>
+                <h4 class="mt-4">Your Gardens</h4>
                 <ul>
                     {% for garden in user_gardens %}
                         <li>
@@ -70,6 +55,12 @@
                         <li>No gardens to steward yet. Add one!</li>
                     {% endfor %}
                 </ul>
+            {% else %}
+                <a href="{% url 'accounts.login' %}" class="btn btn-primary">Login to Create Posts</a>
+            {% endif %}
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6 mb-3">
                 <h4 class="mb-4">Community Posts</h4>
                 {% for post in posts %}
                     <div class="card mb-3">
