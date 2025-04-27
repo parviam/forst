@@ -20,3 +20,11 @@ class PollOptionForm(forms.ModelForm):
     class Meta:
         model = PollOption
         fields = ['option_text']
+# forms.py
+from django import forms
+from .models import GardenSpace
+
+class GardenSpaceForm(forms.ModelForm):
+    class Meta:
+        model = GardenSpace
+        fields = ['name', 'description']

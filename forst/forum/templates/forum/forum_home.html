@@ -51,14 +51,25 @@
     <div class="container mt-3">
         <div class="mb-4">
             {% if user.is_authenticated %}
-                <a href="{% url 'create_post' %}" class="btn btn-primary me-2">Create New Post</a>
+                <a href="{% url 'create_post' %}" class="btn btn-primary">Create New Post</a>
                 <a href="{% url 'create_poll' %}" class="btn btn-primary">Create New Poll</a>
+                <a href="{% url 'add_garden_space' %}" class="btn btn-primary">Register as Garden Steward</a>
             {% else %}
                 <a href="{% url 'accounts.login' %}" class="btn btn-primary">Login to Create Posts</a>
             {% endif %}
         </div>
         <div class="row mt-4">
             <div class="col-md-6 mb-3">
+                <h4>Your Gardens</h4>
+                <ul>
+                    {% for garden in user_gardens %}
+                        <li>
+                            <a href="{% url 'edit_garden' garden.pk %}">{{ garden.name }}</a>
+                        </li>
+                    {% empty %}
+                        <li>No gardens to steward yet. Add one!</li>
+                    {% endfor %}
+                </ul>
                 <h4 class="mb-4">Community Posts</h4>
                 {% for post in posts %}
                     <div class="card mb-3">
@@ -85,7 +96,6 @@
                 {% empty %}
                     <p>No posts yet.</p>
                 {% endfor %}
-                <!-- <hr class="posts-divider"/> -->
             </div>
 
         <div class="col-md-6 mb-3">
