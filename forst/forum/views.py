@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comment, Poll, PollOption, GardenSpace
-from .forms import PostForm, CommentForm, PollForm, PollOptionForm
+from .models import Post, Comment, Poll, PollOption, GardenSpace, MentorshipPost, MentorshipComment
+from .forms import PostForm, CommentForm, PollForm, PollOptionForm, MentorshipPostForm, MentorshipCommentForm
 from django.contrib.auth.decorators import login_required
 from .forms import GardenSpaceForm
 
@@ -145,3 +145,47 @@ def delete_garden(request, pk):
 
     # Redirect the user to the forum home page after deletion
     return redirect('forum_home')
+
+@login_required
+def create_mentorship_post(request):
+    if request.method == 'POST':
+        form = MentorshipPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('mentorship_channel')
+    else:
+        form = MentorshipPostForm()
+    return render(request, 'forum/mentorship_post.html', {'form': form})
+
+def mentorship_channel(request):
+    posts = MentorshipPost.objects.all().order_by('-created_at')
+    return render(request, 'forum/mentorship_channel.html', {'posts': posts})
+
+def mentorship_channel(request):
+    posts = MentorshipPost.objects.all().order_by('-created_at')
+    return render(request, 'forum/mentorship_channel.html', {'posts': posts})
+
+@login_required
+def mentorship_post_detail(request, post_id):
+    post = get_object_or_404(MentorshipPost, id=post_id)
+    comments = post.comments.all().order_by('-created_at')
+    
+    if request.method == 'POST':
+        form = MentorshipCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('mentorship_post_detail', post_id=post.id)
+    else:
+        form = MentorshipCommentForm()
+    
+    return render(request, 'forum/mentorship_post_detail.html', {
+        'post': post,
+        'comments': comments,
+        'form': form
+    })
+    

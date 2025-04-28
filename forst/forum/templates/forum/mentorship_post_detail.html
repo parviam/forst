@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="container mt-4">
+        <a href="{% url 'mentorship_channel' %}" class="btn btn-link mb-5 text-start text-decoration-none">Back to Mentorship Channel</a>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="">{{ post.get_role_display }}</h5>
+                <small class="text-muted">{{ post.created_at|timesince }} ago</small>
+            </div>
+            <p class="card-text">{{ post.content }}</p>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="img-fluid rounded mb-3" alt="Post image">
+            {% endif %}
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">Posted by {{ post.author.username }}</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-light">
+            <h5>Comments</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Your Role</label>
+                    {% render_field form.role class="form-select" %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Add a Comment</label>
+                    {% render_field form.content class="form-control" rows="3" %}
+                </div>
+                <button type="submit" class="btn btn-primary">Post Comment</button>
+            </form>
+            {% for comment in comments %}
+                <div class="mb-3 p-3 bg-light rounded">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-secondary">{{ comment.get_role_display }}</span>
+                        <small class="text-muted">{{ comment.created_at|timesince }} ago</small>
+                    </div>
+                    <p class="mt-2 mb-0">{{ comment.content }}</p>
+                    <small class="text-muted">- {{ comment.author.username }}</small>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
