@@ -13,4 +13,8 @@ urlpatterns = [
     path('add-garden/', views.add_garden_space, name='add_garden_space'),
     path('forum/edit-garden/<int:pk>/', views.edit_garden, name='edit_garden'),
     path('forum/delete-garden/<int:pk>/', views.delete_garden, name='delete_garden'),
+    path('mentorship/', views.mentorship_channel, name='mentorship_channel'),
+    path('mentorship/create/', views.create_mentorship_post, name='create_mentorship_post'),
+    path('mentorship/<int:post_id>/', views.mentorship_post_detail, name='mentorship_post_detail'),
+    
 ]

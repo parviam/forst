@@ -156,8 +156,9 @@ body {
     outline: none !important;
 }
 
-.badge {
-    background-color: #FFFFFF;
+
+.badge-secondary {
+    background-color: #FFFFFF !important;
     color: #6E7841;
 }
 

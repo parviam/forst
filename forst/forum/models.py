@@ -40,3 +40,31 @@ class GardenSpace(models.Model):
 
     def __str__(self):
         return self.name.strip()
+
+class MentorshipPost(models.Model):
+    ROLE_CHOICES = [
+        ('steward', 'Garden Steward'),
+        ('mentee', 'Mentee'),
+    ]
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=7, choices = ROLE_CHOICES)
+    content = models.TextField()
+    image = models.ImageField(upload_to='mentorship_posts/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.get_role_display()} post by {self.author.username}"
+
+class MentorshipComment(models.Model):
+    ROLE_CHOICES = [
+        ('steward', 'Garden Steward'),
+        ('mentee', 'Mentee'),
+    ]
+    post = models.ForeignKey(MentorshipPost, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=7, choices=ROLE_CHOICES)  # Add role field
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.get_role_display()} {self.author.username}"
